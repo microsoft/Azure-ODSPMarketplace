@@ -17,13 +17,6 @@
                 "description": "Direct download link for the SharePoint trial ISO"
             }
         },
-        "primaryAdIpAddress": {
-            "type": "string",
-            "metadata": {
-                "description": "The address of Primary AD"
-            },
-            "defaultValue": "10.0.0.4"
-        },
         "assetLocation": {
             "type": "string",
             "metadata": {
