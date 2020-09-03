@@ -26,7 +26,7 @@
     "vmNetworkSubnet": "10.0.0.0/24",
     "virtualNetworkAddressRange": "10.0.0.0/16",
     "staticSubnetName": "[concat('SPSubNet',uniqueString(resourceGroup().name))]",
-    "virtualNetworkName": "[concat('SPVnet',uniqueString(resourceGroup().name))]",
+    "virtualNetworkName": "CreateVNet",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
     "staticSubnetID": "[concat(variables('vnetID'),'/subnets/',variables('staticSubnetName'))]",
     "spTemplateURL": "[concat(variables('spassetLocation'),'/spVMTemplate.json')]",
@@ -47,7 +47,7 @@
   },
   "resources": [
     {
-      "name": "CreateVnet",
+      "name": "[variables('virtualNetworkName')]",
       "type": "Microsoft.Network/virtualNetworks",
       "location": "[variables('location')]",
       "apiVersion": "2019-04-01",
