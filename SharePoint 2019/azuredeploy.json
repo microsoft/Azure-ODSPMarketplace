@@ -34,7 +34,7 @@
     "spVmDeployment": "CreateSP2019VM",
     "spVmDeploymentID": "[concat('Microsoft.Resources/deployments/', variables('spVmDeployment'))]",
     "spVmName": "MrktplcSP2019",
-    "deploySPStandalone": "DeploySP2019Config",
+    "deploySPStandalone": "ConfigureSP2019VM",
     "deploySPStandaloneTemplateURL": "[concat(variables('spassetLocation'),'/deploySharePointStandalone.json')]",
     "subnets": [
       {
@@ -47,7 +47,7 @@
   },
   "resources": [
     {
-      "name": "[variables('virtualNetworkName')]",
+      "name": "CreateVnet",
       "type": "Microsoft.Network/virtualNetworks",
       "location": "[variables('location')]",
       "apiVersion": "2019-04-01",
