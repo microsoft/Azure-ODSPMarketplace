@@ -154,7 +154,7 @@
                     }
                 ],
                 "networkSecurityGroup": {
-                    "id": "[concat('Microsoft.Network/networkSecurityGroups/', 'NetworkSecurityGroup')]"
+                    "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', 'NetworkSecurityGroup')]"
                 }
             }
         },
