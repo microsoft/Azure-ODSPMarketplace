@@ -92,7 +92,7 @@
         {
             "name": "PublicIP",
             "type": "Microsoft.Network/publicIpAddresses",
-            "apiVersion": "2019-02-01",
+            "apiVersion": "2020-05-01",
             "location": "[resourceGroup().location]",
             "properties": {
                 "publicIpAllocationMethod": "Dynamic"
@@ -104,7 +104,7 @@
         {
             "name": "NetworkSecurityGroup",
             "type": "Microsoft.Network/networkSecurityGroups",
-            "apiVersion": "2019-02-01",
+            "apiVersion": "2020-05-01",
             "location": "[resourceGroup().location]",
             "properties": {
                 "securityRules": [{
@@ -126,7 +126,7 @@
             "name": "[variables('spNicName')]",
             "type": "Microsoft.Network/networkInterfaces",
             "location": "[resourceGroup().location]",
-            "apiVersion": "2015-05-01-preview",
+            "apiVersion": "2020-05-01",
             "dependsOn": [
                 "[concat('Microsoft.Network/networkSecurityGroups/', 'NetworkSecurityGroup')]",
                 "[concat('Microsoft.Network/publicIpAddresses/', 'PublicIP')]"
@@ -152,7 +152,7 @@
             }
         },
         {
-            "apiVersion": "2015-06-15",
+            "apiVersion": "2019-07-01",
             "type": "Microsoft.Compute/virtualMachines",
             "name": "[parameters('vmName')]",
             "location": "[resourceGroup().location]",
