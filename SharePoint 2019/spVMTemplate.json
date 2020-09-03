@@ -97,24 +97,65 @@
             }
         },
         {
+            "name": "PublicIP",
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2019-02-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "publicIpAllocationMethod": "Dynamic"
+            },
+            "sku": {
+                "name": "Basic"
+            }
+        },
+        {
+            "name": "NetworkSecurityGroup",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-02-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "securityRules": [{
+                    "name": "RDP",
+                    "properties": {
+                        "priority": 300,
+                        "protocol": "TCP",
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "3389"
+                    }
+                }]
+            }
+        },
+        {
             "name": "[variables('spNicName')]",
             "type": "Microsoft.Network/networkInterfaces",
             "location": "[resourceGroup().location]",
             "apiVersion": "2015-05-01-preview",
             "dependsOn": [
+                "[concat('Microsoft.Network/networkSecurityGroups/', 'NetworkSecurityGroup')]",
+                "[concat('Microsoft.Network/publicIpAddresses/', 'PublicIP')]"
             ],
             "properties": {
                 "ipConfigurations": [
-                  {
-                    "name": "[concat('ipcfg',parameters('vmName'))]",
-                    "properties": {
-                      "privateIPAllocationMethod": "Dynamic",
-                      "subnet": {
-                        "id": "[parameters('subnetResourceId')]"
-                      }
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIpAddress": {
+                                "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/publicIpAddresses', 'PublicIP')]"
+                            },
+                            "subnet": {
+                                "id": "[parameters('subnetResourceID')]"
+                            }
+                        }
                     }
-                  }
-                ]
+                ],
+                "networkSecurityGroup": {
+                    "id": "[concat('Microsoft.Network/networkSecurityGroups/', 'NetworkSecurityGroup')]"
+                }
             }
         },
         {
