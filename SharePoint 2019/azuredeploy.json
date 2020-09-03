@@ -25,7 +25,6 @@
     "location": "[resourceGroup().location]",
     "vmNetworkSubnet": "10.0.0.0/24",
     "virtualNetworkAddressRange": "10.0.0.0/16",
-    "primaryAdIpAddress": "10.0.0.4",
     "staticSubnetName": "[concat('SPSubNet',uniqueString(resourceGroup().name))]",
     "virtualNetworkName": "[concat('SPVnet',uniqueString(resourceGroup().name))]",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
@@ -125,9 +124,6 @@
           },
           "sharepointSourceDLLink": {
             "value": "[variables('sharepointDownloadLink')]"
-          },
-          "primaryAdIpAddress": {
-            "value": "[variables('primaryAdIpAddress')]"
           }
         }
       }

@@ -52,7 +52,6 @@
                     "ModulesUrl": "[variables('deploySPStandaloneModulesURL')]",
                     "ConfigurationFunction": "[variables('deploySPStandaloneConfigurationFunction')]",
                     "Properties": {
-                        "primaryAdIpAddress": "[parameters('primaryAdIpAddress')]",
                         "AdminCreds": {
                             "UserName": "[parameters('adminUserName')]",
                             "Password": "PrivateSettingsRef:AdminPassword"
