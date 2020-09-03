@@ -30,13 +30,6 @@
             },
             "defaultValue": "latest"
         },
-        "dataDiskSize": {
-            "type": "int",
-            "metadata": {
-                "description": "The Size of SharePoint VM data disk. Default 10 GB"
-            },
-            "defaultValue": 10
-        },
         "vmName": {
             "type": "string",
             "metadata": {
@@ -191,28 +184,7 @@
                         "caching": "ReadWrite",
                         "createOption": "FromImage"
                     },
-                    "dataDisks": [
-                        {
-                            "vhd": {
-                                "uri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', parameters('storageAccount')),providers('Microsoft.Storage','storageAccounts').apiVersions[0]).primaryEndpoints.blob, variables('vmContainerName'),'/',parameters('vmName'),'0','-data-1.vhd')]"
-                            },
-                            "name": "[concat(parameters('vmName'), '0','data-1.vhd')]",
-                            "caching": "None",
-                            "createOption": "Empty",
-                            "diskSizeGB": "[parameters('dataDiskSize')]",
-                            "lun": 0
-                        },
-                        {
-                            "vhd": {
-                                "uri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', parameters('storageAccount')),providers('Microsoft.Storage','storageAccounts').apiVersions[0]).primaryEndpoints.blob,variables('vmContainerName'),'/', parameters('vmName'), '0','log-1.vhd')]"
-                            },
-                            "name": "[concat(parameters('vmName'), '0','log-1.vhd')]",
-                            "caching": "None",
-                            "createOption": "Empty",
-                            "diskSizeGB": "[parameters('dataDiskSize')]",
-                            "lun": 1
-                        }
-                    ]
+                    "dataDisks": []
                 },
                 "networkProfile": {
                     "networkInterfaces": [
