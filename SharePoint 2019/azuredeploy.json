@@ -21,7 +21,7 @@
     "sharepointDownloadLink": "https://download.microsoft.com/download/C/B/A/CBA01793-1C8A-4671-BE0D-38C9E5BBD0E9/officeserver.img",
     "storageAccountType": "Premium_LRS",
     "spVMSize": "Standard_D4s_v3",
-    "spassetLocation": "https://raw.githubusercontent.com/Microsoft/Azure-ODSPMarketplace/dev/SharePoint2019",
+    "spassetLocation": "https://raw.githubusercontent.com/Microsoft/Azure-ODSPMarketplace/dev/SharePoint%202019",
     "location": "[resourceGroup().location]",
     "vmNetworkSubnet": "10.0.0.0/24",
     "virtualNetworkAddressRange": "10.0.0.0/16",
