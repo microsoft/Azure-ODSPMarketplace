@@ -1,0 +1,133 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminUsername": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Administrator of the new VMs and Domain"
+            },
+            "defaultValue": "lcladmin"
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "The password for the Administrator account of the new VMs and Domain"
+            },            
+            "defaultValue": "Pass@word!123"
+        }
+    },
+  "variables": {
+    "sharepointDownloadLink": "https://download.microsoft.com/download/C/B/A/CBA01793-1C8A-4671-BE0D-38C9E5BBD0E9/officeserver.img",
+    "storageAccountType": "Premium_LRS",
+    "spVMSize": "Standard_D4s_v3",
+    "spassetLocation": "https://raw.githubusercontent.com/Microsoft/Azure-ODSPMarketplace/dev/SharePoint 2019",
+    "location": "[resourceGroup().location]",
+    "vmNetworkSubnet": "10.0.0.0/24",
+    "virtualNetworkAddressRange": "10.0.0.0/16",
+    "staticSubnetName": "[concat('SPSubNet',uniqueString(resourceGroup().name))]",
+    "virtualNetworkName": "[concat('SPVnet',uniqueString(resourceGroup().name))]",
+    "vnetID": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
+    "staticSubnetID": "[concat(variables('vnetID'),'/subnets/',variables('staticSubnetName'))]",
+    "spTemplateURL": "[concat(variables('spassetLocation'),'/spVMTemplate.json')]",
+    "spStorageName": "[tolower(concat('SP2019',uniqueString(resourceGroup().name)))]",
+    "spVmDeployment": "CreateSP2019VM",
+    "spVmDeploymentID": "[concat('Microsoft.Resources/deployments/', variables('spVmDeployment'))]",
+    "spVmName": "MrktplcSP2019",
+    "deploySPStandalone": "DeploySP2019Config",
+    "deploySPStandaloneTemplateURL": "[concat(variables('spassetLocation'),'/deploySharePointStandalone.json')]",
+    "subnets": [
+      {
+        "name": "[variables('staticSubnetName')]",
+        "properties": {
+          "addressPrefix": "[variables('vmNetworkSubnet')]"
+        }
+      }
+    ]
+  },
+  "resources": [
+    {
+      "name": "[variables('virtualNetworkName')]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "location": "[variables('location')]",
+      "apiVersion": "2019-04-01",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('virtualNetworkAddressRange')]"
+          ]
+        },
+        "subnets": "[variables('subnets')]"
+      }
+    },
+    {
+      "name": "[variables('spVmDeployment')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('spTemplateURL')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vmName": {
+            "value": "[variables('spVmName')]"
+          },
+          "storageAccount": {
+            "value": "[variables('spStorageName')]"
+          },
+          "storageAccountType": {
+            "value": "[variables('storageAccountType')]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "vmSize": {
+            "value": "[variables('spVMSize')]"
+          },
+          "subnetResourceId": {
+            "value": "[variables('staticSubnetID')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "[variables('deploySPStandalone')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "[variables('spVmDeploymentID')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('deploySPStandaloneTemplateURL')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "spVMName": {
+            "value": "[variables('spVmName')]"
+          },
+          "adminUserName": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "assetLocation": {
+            "value": "[variables('spassetLocation')]"
+          },
+          "sharepointSourceDLLink": {
+            "value": "[variables('sharepointDownloadLink')]"
+          }
+        }
+      }
+    }
+  ],
+    "outputs": { }
+}
