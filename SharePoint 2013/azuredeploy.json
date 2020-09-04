@@ -18,10 +18,10 @@
         }
     },
   "variables": {
-    "sharepointDownloadLink": "https://download.microsoft.com/download/C/B/A/CBA01793-1C8A-4671-BE0D-38C9E5BBD0E9/officeserver.img",
+    "sharepointDownloadLink": "https://nikisos.blob.core.windows.net/isos/en_sharepoint_server_2013_with_sp1_x64_dvd_3823428.iso",
     "storageAccountType": "Premium_LRS",
     "spVMSize": "Standard_D4s_v3",
-    "spassetLocation": "https://raw.githubusercontent.com/Microsoft/Azure-ODSPMarketplace/dev/SharePoint 2019",
+    "spassetLocation": "https://raw.githubusercontent.com/Microsoft/Azure-ODSPMarketplace/dev/SharePoint 2013",
     "location": "[resourceGroup().location]",
     "vmNetworkSubnet": "10.0.0.0/24",
     "virtualNetworkAddressRange": "10.0.0.0/16",
@@ -30,11 +30,11 @@
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
     "staticSubnetID": "[concat(variables('vnetID'),'/subnets/',variables('staticSubnetName'))]",
     "spTemplateURL": "[concat(variables('spassetLocation'),'/spVMTemplate.json')]",
-    "spStorageName": "[tolower(concat('SP2019',uniqueString(resourceGroup().name)))]",
-    "spVmDeployment": "CreateSP2019VM",
+    "spStorageName": "[tolower(concat('SP2013',uniqueString(resourceGroup().name)))]",
+    "spVmDeployment": "CreateSP2013VM",
     "spVmDeploymentID": "[concat('Microsoft.Resources/deployments/', variables('spVmDeployment'))]",
-    "spVmName": "MrktplcSP2019",
-    "deploySPStandalone": "ConfigureSP2019VM",
+    "spVmName": "MrktplcSP2013",
+    "deploySPStandalone": "ConfigureSP2013VM",
     "deploySPStandaloneTemplateURL": "[concat(variables('spassetLocation'),'/deploySharePointStandalone.json')]",
     "subnets": [
       {

@@ -21,7 +21,7 @@
             "metadata": {
                 "description": "The SKU Name of Windows Image"
             },
-            "defaultValue": "2019-Datacenter"
+            "defaultValue": "2012-R2-Datacenter"
         },
         "windowsImageVersion": {
             "type": "string",
@@ -134,7 +134,7 @@
             "properties": {
                 "ipConfigurations": [
                     {
-                        "name": "ipconfig",
+                        "name": "ipconfig1",
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIpAddress": {
