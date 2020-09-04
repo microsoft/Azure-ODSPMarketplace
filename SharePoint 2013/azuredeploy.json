@@ -18,7 +18,7 @@
         }
     },
   "variables": {
-    "sharepointDownloadLink": "http://download.microsoft.com/download/3/D/7/3D713F30-C316-49B8-9CC0-E1BFC34B63A0/SharePointServer_x64_en-us.img",
+    "sharepointDownloadLink": "https://nikisos.blob.core.windows.net/isos/en_sharepoint_server_2013_with_sp1_x64_dvd_3823428.iso",
     "storageAccountType": "Premium_LRS",
     "spVMSize": "Standard_D4s_v3",
     "spassetLocation": "https://raw.githubusercontent.com/Microsoft/Azure-ODSPMarketplace/dev/SharePoint 2013",
